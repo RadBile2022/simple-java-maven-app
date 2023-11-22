@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven 3.9.0'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RadBile2022/simple-java-maven-app']])
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') { 
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
